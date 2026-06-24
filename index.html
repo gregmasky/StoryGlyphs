@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StoryGlyphs — Fiction digitale assistée par IA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:   #060610;
+      --cream: #faf8f4;
+      --gold:  #c4b89e;
+      --muted: #8a7f72;
+    }
+
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'EB Garamond', Georgia, serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      padding: 64px 24px 52px;
+      border-bottom: 1px solid rgba(196, 184, 158, 0.18);
+    }
+
+    .header-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .header-wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(36px, 6vw, 56px);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .header-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .orn-line    { height: 1px; width: 44px; background: var(--gold); opacity: 0.45; }
+    .orn-diamond { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); opacity: 0.65; }
+
+    .header-baseline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 64px 24px 80px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      max-width: 820px;
+      width: 100%;
+      border: 1px solid rgba(196, 184, 158, 0.2);
+      background: rgba(250, 248, 244, 0.03);
+    }
+
+    .card-cover {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.92);
+      transition: filter 0.4s ease;
+    }
+
+    .card:hover .card-cover img { filter: brightness(1); }
+
+    .card-body {
+      padding: 40px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-left: 1px solid rgba(196, 184, 158, 0.15);
+    }
+
+    .card-genre {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: clamp(26px, 3.5vw, 34px);
+      line-height: 1.12;
+      letter-spacing: -0.01em;
+      color: var(--cream);
+      margin-bottom: 10px;
+    }
+
+    .card-ornament {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .card-orn-line    { height: 1px; width: 32px; background: var(--gold); opacity: 0.35; }
+    .card-orn-diamond { width: 4px; height: 4px; background: var(--gold); transform: rotate(45deg); opacity: 0.5; }
+
+    .card-text {
+      font-size: 15.5px;
+      line-height: 1.82;
+      color: rgba(250, 248, 244, 0.7);
+      margin-bottom: 28px;
+    }
+
+    .card-text p + p { margin-top: 1em; }
+
+    .card-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 16.5px;
+      color: var(--gold);
+      opacity: 0.75;
+      margin-bottom: 36px;
+      padding-left: 16px;
+      border-left: 1px solid rgba(196, 184, 158, 0.3);
+      line-height: 1.6;
+    }
+
+    .card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 28px;
+      background: transparent;
+      border: 1px solid rgba(196, 184, 158, 0.4);
+      color: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      align-self: flex-start;
+    }
+
+    .card-cta:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--ink);
+    }
+
+    .card-cta svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .card-cta:hover svg { transform: translateX(3px); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 28px 24px;
+      border-top: 1px solid rgba(196, 184, 158, 0.12);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .footer-sep {
+      width: 3px;
+      height: 3px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      opacity: 0.4;
+    }
+
+    .footer-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      header { padding: 48px 20px 40px; }
+
+      .card { grid-template-columns: 1fr; }
+
+      .card-cover { height: 260px; }
+
+      .card-body {
+        border-left: none;
+        border-top: 1px solid rgba(196, 184, 158, 0.15);
+        padding: 32px 24px;
+      }
+
+      main { padding: 40px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="header-eyebrow">Imprint littéraire digital</p>
+    <h1 class="header-wordmark">StoryGlyphs</h1>
+    <div class="header-ornament">
+      <div class="orn-line"></div>
+      <div class="orn-diamond"></div>
+      <div class="orn-line"></div>
+    </div>
+    <p class="header-baseline">Fiction digitale assistée par IA</p>
+  </header>
+
+  <main>
+    <article class="card">
+
+      <div class="card-cover">
+        <img src="couv-oeilquivoit.jpeg" alt="Couverture — L'Œil qui voit" />
+      </div>
+
+      <div class="card-body">
+        <div>
+          <p class="card-genre">Science-fiction · Nouvelle courte</p>
+          <h2 class="card-title">L'Œil qui voit</h2>
+          <div class="card-ornament">
+            <div class="card-orn-line"></div>
+            <div class="card-orn-diamond"></div>
+            <div class="card-orn-line"></div>
+          </div>
+          <div class="card-text">
+            <p>2050. Dans les laboratoires de l'Institut Cognex, on ne cherche plus à savoir si les animaux pensent. On cherche à savoir jusqu'où.</p>
+            <p>Aira est un berger australien implanté dès la naissance. Deux yeux, deux mondes : celui des odeurs et celui des données. Celui de l'instinct et celui du langage. Sa maîtresse, Léa, l'observe depuis trois ans avec la rigueur froide d'une scientifique. Elle consigne. Elle mesure. Elle croit tout contrôler.</p>
+            <p>Jusqu'au soir où Aira prend la parole — non pour répondre à un ordre, mais pour dire quelque chose qu'il a choisi de dire.</p>
+            <p>Une nouvelle intime et vertigineuse, quelque part entre la science-fiction et la fable, entre le laboratoire et le salon.</p>
+          </div>
+          <p class="card-quote">« Si vous avez déjà regardé un animal dans les yeux en vous demandant ce qu'il voyait, cette histoire est pour vous. »</p>
+        </div>
+        <a class="card-cta" href="lOeil-qui-voit_FR.pdf" target="_blank" rel="noopener">
+          Lire la nouvelle
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-text">© StoryGlyphs 2026</span>
+      <div class="footer-sep"></div>
+      <a class="footer-link" href="mailto:gregmasky@gmail.com">gregmasky@gmail.com</a>
+    </div>
+  </footer>
+
+</body>
+</html>
