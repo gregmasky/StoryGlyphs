@@ -84,41 +84,41 @@
 
     /* ── CARD ── */
     .card {
-      display: grid;
-      grid-template-columns: 150px 1fr;
-      max-width: 820px;
+      max-width: 680px;
       width: 100%;
       border: 1px solid rgba(196, 184, 158, 0.2);
       background: rgba(250, 248, 244, 0.03);
       overflow: hidden;
     }
 
-    .card-cover {
+    /* Bannière image */
+    .card-banner {
       position: relative;
-      overflow: hidden;
-      min-height: 100%;
+      width: 100%;
+      height: 320px;
     }
 
-    .card-cover img {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .card-banner img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center 20%;
       display: block;
-      filter: brightness(0.92);
-      transition: filter 0.4s ease;
     }
 
-    .card:hover .card-cover img { filter: brightness(1); }
+    .card-banner::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background: linear-gradient(to bottom, transparent, #060610);
+    }
 
-    .card-body {
-      padding: 40px 44px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      border-left: 1px solid rgba(196, 184, 158, 0.15);
+    /* Contenu texte */
+    .card-content {
+      padding: 32px 52px 44px;
     }
 
     .card-genre {
@@ -133,7 +133,7 @@
     .card-title {
       font-family: 'Cormorant Garamond', serif;
       font-weight: 600;
-      font-size: clamp(26px, 3.5vw, 34px);
+      font-size: clamp(28px, 4vw, 38px);
       line-height: 1.12;
       letter-spacing: -0.01em;
       color: var(--cream);
@@ -144,15 +144,15 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
 
     .card-orn-line    { height: 1px; width: 32px; background: var(--gold); opacity: 0.35; }
     .card-orn-diamond { width: 4px; height: 4px; background: var(--gold); transform: rotate(45deg); opacity: 0.5; }
 
     .card-text {
-      font-size: 15.5px;
-      line-height: 1.82;
+      font-size: 16px;
+      line-height: 1.85;
       color: rgba(250, 248, 244, 0.7);
       margin-bottom: 28px;
     }
@@ -162,10 +162,10 @@
     .card-quote {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: 16.5px;
+      font-size: 17px;
       color: var(--gold);
       opacity: 0.75;
-      margin-bottom: 36px;
+      margin-bottom: 40px;
       padding-left: 16px;
       border-left: 1px solid rgba(196, 184, 158, 0.3);
       line-height: 1.6;
@@ -185,7 +185,6 @@
       text-transform: uppercase;
       text-decoration: none;
       transition: background 0.2s, border-color 0.2s, color 0.2s;
-      align-self: flex-start;
     }
 
     .card-cta:hover {
@@ -245,20 +244,11 @@
     .footer-link:hover { color: var(--gold); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 640px) {
-      header { padding: 48px 20px 40px; }
-
-      .card { grid-template-columns: 1fr; }
-
-      .card-cover { height: 260px; }
-
-      .card-body {
-        border-left: none;
-        border-top: 1px solid rgba(196, 184, 158, 0.15);
-        padding: 32px 24px;
-      }
-
-      main { padding: 40px 16px 60px; }
+    @media (max-width: 600px) {
+      header          { padding: 48px 20px 40px; }
+      .card-banner    { height: 220px; }
+      .card-content   { padding: 28px 24px 36px; }
+      main            { padding: 40px 16px 60px; }
     }
   </style>
 </head>
@@ -278,27 +268,25 @@
   <main>
     <article class="card">
 
-      <div class="card-cover">
+      <div class="card-banner">
         <img src="couv-oeilquivoit.jpeg" alt="Couverture — L'Œil qui voit" />
       </div>
 
-      <div class="card-body">
-        <div>
-          <p class="card-genre">Science-fiction · Nouvelle courte</p>
-          <h2 class="card-title">L'Œil qui voit</h2>
-          <div class="card-ornament">
-            <div class="card-orn-line"></div>
-            <div class="card-orn-diamond"></div>
-            <div class="card-orn-line"></div>
-          </div>
-          <div class="card-text">
-            <p>2050. Dans les laboratoires de l'Institut Cognex, on ne cherche plus à savoir si les animaux pensent. On cherche à savoir jusqu'où.</p>
-            <p>Aira est un berger australien implanté dès la naissance. Deux yeux, deux mondes : celui des odeurs et celui des données. Celui de l'instinct et celui du langage. Sa maîtresse, Léa, l'observe depuis trois ans avec la rigueur froide d'une scientifique. Elle consigne. Elle mesure. Elle croit tout contrôler.</p>
-            <p>Jusqu'au soir où Aira prend la parole — non pour répondre à un ordre, mais pour dire quelque chose qu'il a choisi de dire.</p>
-            <p>Une nouvelle intime et vertigineuse, quelque part entre la science-fiction et la fable, entre le laboratoire et le salon.</p>
-          </div>
-          <p class="card-quote">« Si vous avez déjà regardé un animal dans les yeux en vous demandant ce qu'il voyait, cette histoire est pour vous. »</p>
+      <div class="card-content">
+        <p class="card-genre">Science-fiction · Nouvelle courte</p>
+        <h2 class="card-title">L'Œil qui voit</h2>
+        <div class="card-ornament">
+          <div class="card-orn-line"></div>
+          <div class="card-orn-diamond"></div>
+          <div class="card-orn-line"></div>
         </div>
+        <div class="card-text">
+          <p>2050. Dans les laboratoires de l'Institut Cognex, on ne cherche plus à savoir si les animaux pensent. On cherche à savoir jusqu'où.</p>
+          <p>Aira est un berger australien implanté dès la naissance. Deux yeux, deux mondes : celui des odeurs et celui des données. Celui de l'instinct et celui du langage. Sa maîtresse, Léa, l'observe depuis trois ans avec la rigueur froide d'une scientifique. Elle consigne. Elle mesure. Elle croit tout contrôler.</p>
+          <p>Jusqu'au soir où Aira prend la parole — non pour répondre à un ordre, mais pour dire quelque chose qu'il a choisi de dire.</p>
+          <p>Une nouvelle intime et vertigineuse, quelque part entre la science-fiction et la fable, entre le laboratoire et le salon.</p>
+        </div>
+        <p class="card-quote">« Si vous avez déjà regardé un animal dans les yeux en vous demandant ce qu'il voyait, cette histoire est pour vous. »</p>
         <a class="card-cta" href="lOeil-qui-voit_FR.pdf" target="_blank" rel="noopener">
           Lire la nouvelle
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
